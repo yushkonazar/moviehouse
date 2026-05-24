@@ -1,0 +1,26 @@
+<%- include('partials/header') %>
+
+<main class="container mx-auto py-10 px-4">
+    <h2 class="text-3xl font-bold mb-8">Зараз у тренді</h2>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        <% movies.forEach(movie => { %>
+            <a href="/movie/<%= movie.id %>" class="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300 block">
+                <img 
+                    src="<%= movie.poster_path ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path : '/images/no-poster.svg' %>"
+                    alt="<%= movie.title %>"
+                    class="w-full h-[450px] object-cover"
+                >
+                <div class="p-4">
+                    <h3 class="font-bold text-lg truncate"><%= movie.title %></h3>
+                    <div class="flex justify-between items-center mt-2 text-sm text-gray-400">
+                        <span><%= movie.release_date.split('-')[0] %></span>
+                        <span class="text-yellow-500 font-semibold">⭐ <%= movie.vote_average.toFixed(1) %></span>
+                    </div>
+                </div>
+            </a>
+        <% }) %>
+    </div>
+</main>
+
+<%- include('partials/footer') %>
