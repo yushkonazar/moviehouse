@@ -4,12 +4,12 @@
         <div class="relative h-screen">
             <div class="absolute inset-0 w-full h-full bg-cover bg-center"style="background-image: url(<%= movie.backdrop_path ? 'https://image.tmdb.org/t/p/original' + movie.backdrop_path : '/images/no-poster.svg' %>);">
             </div>
-            <div class="absolute inset-0 w-full h-full bg-black/80"></div>
-            <div class="absolute inset-0 w-full h-full flex p-8">
-                <div class="w-1/3 h-full overflow-hidden rounded-lg shadow-2xl ring-1 ring-white/20">
+            <div class="absolute inset-0 w-full h-full bg-black/50 bg-gradient-to-t from-gray-900 to-black/50"></div>
+            <div class="absolute inset-0 w-full h-full flex items-end p-12">
+                <div class="w-64 h-[420px] overflow-hidden rounded-lg shadow-2xl shrink-0 ring-white/20">
                     <img class="h-full w-full object-cover" src="<%= movie.poster_path ? 'https://image.tmdb.org/t/p/original' + movie.poster_path : '/images/no-poster.svg'%>" alt="Movie Poster">
                 </div>
-                <div class="w-2/3 text-white">
+                <div class="w-2/3 text-white pl-10">
                     <h1 class="text-white text-2xl font-bold"><%= movie.title %></h1>
                     <p>Рейтинг: <%= movie.vote_average %></p>
                     <p>Жанр: <%= movie.genres.map(genre => genre.name).join(', ') %></p>
