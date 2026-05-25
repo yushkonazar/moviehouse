@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.get("/", async (req, res) => {
     try {
         const movies = await getPopularMovies();
-        res.render("index", { movies })    
+        res.render("index", { movies, transparentHeader: false  })    
     } catch (error) {
         res.status(500).render("error", { message: error.message });
         res.status(404).render("error", { message: error.message });
@@ -32,7 +32,7 @@ app.get("/movie/:id", async (req, res) => {
     try {
         const id = req.params.id;
         const movie = await getMovieById(id);
-        res.render("movie", { movie });
+        res.render("movie", { movie, transparentHeader: true  });
     } catch (error) {
         res.status(500).render("error", { message: error.message });
     }

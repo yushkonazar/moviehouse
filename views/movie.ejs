@@ -1,20 +1,46 @@
 <%- include('partials/header') %>
 
     <main>
-        <div class="relative h-screen">
+        <div class="relative min-h-screen">
             <div class="absolute inset-0 w-full h-full bg-cover bg-center"style="background-image: url(<%= movie.backdrop_path ? 'https://image.tmdb.org/t/p/original' + movie.backdrop_path : '/images/no-poster.svg' %>);">
             </div>
             <div class="absolute inset-0 w-full h-full bg-black/50 bg-gradient-to-t from-gray-900 to-black/50"></div>
-            <div class="absolute inset-0 w-full h-full flex items-end p-12">
+            <div class="absolute inset-0 w-full h-full flex items-end p-12 pb-28">
                 <div class="w-64 h-[420px] overflow-hidden rounded-lg shadow-2xl shrink-0 ring-white/20">
                     <img class="h-full w-full object-cover" src="<%= movie.poster_path ? 'https://image.tmdb.org/t/p/original' + movie.poster_path : '/images/no-poster.svg'%>" alt="Movie Poster">
                 </div>
-                <div class="w-2/3 text-white pl-10">
+                <div class="w-2/3 text-white pl-10 space-y-3">
                     <h1 class="text-white text-2xl font-bold"><%= movie.title %></h1>
-                    <p>Рейтинг: <%= movie.vote_average %></p>
-                    <p>Жанр: <%= movie.genres.map(genre => genre.name).join(', ') %></p>
-                    <p>Рік: <%= movie.release_date.split('-')[0] %>. Тривалість <%= movie.runtime %> хв. Статус: <%= movie.status %></p>
-                    <p><%= movie.overview %></p>
+                    <p class="text-yellow-400 font-semibold">⭐ <%= movie.vote_average.toFixed(1) %></p>
+                    
+                    <div class="flex gap-2 flex-wrap">
+                        <% movie.genres.forEach(genre => { %>
+                            <span class="bg-red-600 text-white text-sm px-3 py-1 rounded-full">
+                                <%= genre.name %>
+                            </span>
+                        <% }) %>
+                    </div>
+
+                    <p class="text-gray-400 text-sm"><%= movie.release_date.split('-')[0] %> · <%= movie.runtime %> хв · <%= movie.status %></p>
+                    <p class="text-gray-300 text-sm leading-relaxed"><%= movie.overview %></p>
+                    
+                    <div>
+                        <details>
+                            <summary class="cursor-pointer text-gray-400 hover:text-white text-sm list-none flex items-center gap-2 w-fit transition-colors duration-20">
+                                ℹ Додаткова інформація
+                            </summary>
+                            <div class="flex gap-8 mt-2">
+                                <div>
+                                    <p class="text-gray-200 text-xs uppercase tracking-wider">Бюджет</p>
+                                    <p class="text-gray-400 text-sm"><%= movie.budget > 0 ? new Intl.NumberFormat('en-Us', {style: 'currency', currency: 'USD', maximumFractionDigits: 0}).format(movie.budget) : 'Невідомо' %></p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-200 text-xs uppercase tracking-wider">Касові збори</p>
+                                    <p class="text-gray-400 text-sm"><%= movie.revenue > 0 ? new Intl.NumberFormat('en-Us', {style: 'currency', currency: 'USD', maximumFractionDigits: 0}).format(movie.revenue) : 'Невідомо' %></p>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
                 </div>
             </div>
         </div>
