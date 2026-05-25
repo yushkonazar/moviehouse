@@ -5,12 +5,12 @@
             <div class="absolute inset-0 w-full h-full bg-cover bg-center"style="background-image: url(<%= movie.backdrop_path ? 'https://image.tmdb.org/t/p/original' + movie.backdrop_path : '/images/no-poster.svg' %>);">
             </div>
             <div class="absolute inset-0 w-full h-full bg-black/50 bg-gradient-to-t from-gray-900 to-black/50"></div>
-            <div class="absolute inset-0 w-full h-full flex items-end p-12 pb-28">
+            <div class="absolute inset-0 w-full h-full flex items-end p-12 pb-20">
                 <div class="w-64 h-[420px] overflow-hidden rounded-lg shadow-2xl shrink-0 ring-white/20">
                     <img class="h-full w-full object-cover" src="<%= movie.poster_path ? 'https://image.tmdb.org/t/p/original' + movie.poster_path : '/images/no-poster.svg'%>" alt="Movie Poster">
                 </div>
                 <div class="w-2/3 text-white pl-10 space-y-3">
-                    <h1 class="text-white text-2xl font-bold"><%= movie.title %></h1>
+                    <h1 class="text-white text-4xl font-bold"><%= movie.title %></h1>
                     <p class="text-yellow-400 font-semibold">⭐ <%= movie.vote_average.toFixed(1) %></p>
                     
                     <div class="flex gap-2 flex-wrap">
@@ -21,10 +21,10 @@
                         <% }) %>
                     </div>
 
-                    <p class="text-gray-400 text-sm"><%= movie.release_date.split('-')[0] %> · <%= movie.runtime %> хв · <%= movie.status %></p>
+                    <p class="text-gray-400 text-base"><%= movie.release_date.split('-')[0] %> · <%= movie.runtime %> хв · <%= movie.status %></p>
                     <p class="text-gray-300 text-sm leading-relaxed"><%= movie.overview %></p>
                     
-                    <div>
+                    <div class="ring-1 ring-white/20 py-2 my-1 w-60 justify-items-center">
                         <details>
                             <summary class="cursor-pointer text-gray-400 hover:text-white text-sm list-none flex items-center gap-2 w-fit transition-colors duration-20">
                                 ℹ Додаткова інформація
@@ -40,6 +40,35 @@
                                 </div>
                             </div>
                         </details>
+                    </div>
+
+                    <p class="text-gray-300 text-xs font-bold uppercase tracking-wider mt-6 pb-0">Дивитись на:</p>
+
+                    <div class="flex gap-4 mt-0 items-center ">
+                        <a href="https://www.google.com/search?q=<%= encodeURIComponent(movie.title + ' українською uakino.club') %>" 
+                        target="_blank" rel="noopener noreferrer"
+                        class="hover:opacity-80 transition-opacity duration-200 ring-1 ring-white/20"
+                        title="Шукати на UAKino">
+                            <img src="/images/uakino.png" alt="UAKino" class="w-12 h-12 rounded-full object-cover">
+                        </a>
+                        <a href="https://tv.kyivstar.ua/ua/search?query=<%= encodeURIComponent(movie.title) %>" 
+                        target="_blank" rel="noopener noreferrer"
+                        class="hover:opacity-80 transition-opacity duration-200 ring-1 ring-white/20"
+                        title="Шукати на КиївстарТВ">
+                            <img src="/images/kyivstar.png" alt="КиївстарТВ" class="w-12 h-12 rounded-full object-cover">
+                        </a>
+                        <a href="https://sweet.tv/search?q=<%= encodeURIComponent(movie.title) %>" 
+                        target="_blank" rel="noopener noreferrer"
+                        class="hover:opacity-80 transition-opacity duration-200 ring-1 ring-white/20"
+                        title="Шукати на Sweet.tv">
+                            <img src="/images/sweet.png" alt="Sweet.tv" class="w-12 h-12 rounded-full object-cover">
+                        </a>
+                        <a href="https://rezka-ua.tv/search/?do=search&subaction=search&q=<%= encodeURIComponent(movie.title) %>" 
+                        target="_blank" rel="noopener noreferrer"
+                        class="hover:opacity-80 transition-opacity duration-200 ring-1 ring-white/20"
+                        title="Шукати на Rezka">
+                            <img src="/images/rezka.png" alt="Rezka" class="w-12 h-12 rounded-full object-cover">
+                        </a>
                     </div>
                 </div>
             </div>
