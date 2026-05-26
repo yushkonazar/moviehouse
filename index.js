@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
-import { getMovieById, getPopularMovies } from "./src/services/tmdbService.js"
+import { getMovieById, getPopularMovies, searchMovies } from "./src/services/tmdbService.js"
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -24,7 +24,6 @@ app.get("/", async (req, res) => {
         res.render("index", { movies, transparentHeader: false  })    
     } catch (error) {
         res.status(500).render("error", { message: error.message });
-        res.status(404).render("error", { message: error.message });
     }
 });
 
@@ -35,6 +34,17 @@ app.get("/movie/:id", async (req, res) => {
         res.render("movie", { movie, transparentHeader: true  });
     } catch (error) {
         res.status(500).render("error", { message: error.message });
+    }
+});
+
+app.get("/search", async (req, res) => {
+    try {
+        const query = req.query.q;
+        if (!query) return res.render("search", { query: '', movies: [], transparentHeader: false })
+        const movies = await searchMovies(query);
+        res.render("search", { query, movies, transparentHeader: false });
+    } catch (error) {
+        res.status(500).render("error", { message: error.message })
     }
 })
 

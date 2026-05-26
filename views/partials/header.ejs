@@ -5,15 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MovieHouse</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/output.css">
 </head>
 <body class="bg-gray-900 text-white">
     <nav class="fixed top-0 left-0 right-0 z-50 p-6 <%= transparentHeader ? 'bg-gradient-to-b from-black/80 to-transparent' : 'bg-gray-900 border-b border-gray-800' %>">
         <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold text-red-500">MovieHouse</h1>
-            <div class="space-x-4">
-                <a href="/" class="hover:text-red-400">Головна</a>
-                <a href="/popular" class="hover:text-red-400">Популярне</a>
+            <a href="/" 
+                class="text-4xl font-bold text-red-500 drop-shadow-lg hover:text-red-700 transition-colors duration-200 tracking-wider"
+                style="font-family: 'Bebas Neue', sans-serif; text-shadow: 0 0 20px rgba(239, 68, 68, 0.8), 0 0 40px rgba(239, 68, 68, 0.4);">
+                MovieHouse
+            </a>
+            <div class="flex items-center gap-4">
+                <a href="/" class="p-2 rounded-full hover:bg-gray-800 hover:text-red-400 transition-all duration-200" style="font-family: 'Bebas Neue', sans-serif; text-shadow: 0 0 20px rgba(239, 68, 68, 0.8), 0 0 40px rgba(239, 68, 68, 0.4);">Головна</a>
+                <a href="/popular" class="p-2 rounded-full hover:bg-gray-800 hover:text-red-400 transition-all duration-200" style="font-family: 'Bebas Neue', sans-serif; text-shadow: 0 0 20px rgba(239, 68, 68, 0.8), 0 0 40px rgba(239, 68, 68, 0.4);">Популярне</a>
+                <form action="/search" method="get" class="flex items-center">
+                        <input 
+                            type="text"
+                            name="q"
+                            placeholder="Пошук фільму..."
+                            autocomplete="off"
+                            value="<%= typeof query !== 'undefined' ? query : '' %>"
+                            class="bg-gray-800 text-white text-sm px-4 py-2 outline-none border border-gray-700 focus:border-red-500 transition-all duration-300 w-36 focus:w-64 rounded-l-full"
+                            >
+                        <button 
+                            type="submit"
+                            class="bg-red-600 hover:bg-red-500 text-white text-sm px-4 py-2 rounded-r-full border border-red-600 hover:border-red-500 transition-colors duration-200">
+                            <img src="/images/search-icon.svg" alt="Пошук" class="w-5 h-5">
+                        </button>
+                </form>
             </div>
         </div>
     </nav>

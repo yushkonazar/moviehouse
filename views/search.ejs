@@ -1,8 +1,11 @@
 <%- include('partials/header') %>
 
 <main class="container mx-auto pt-32 pb-10 px-4">
-    <h2 class="text-3xl font-bold mb-8">Зараз у тренді</h2>
-    
+    <h2 class="text-3xl font-bold mb-8">
+        Результати за запитом: "<span class="text-red-500"><%= query %></span>" 
+        <span class="text-gray-400 text-3xl font-bold">(<%= movies.length %>)</span>
+    </h2>
+
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         <% movies.forEach(movie => { %>
             <a href="/movie/<%= movie.id %>" class="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300 block">

@@ -48,3 +48,20 @@ export const getMovieById = async (id) => {
         throw error;
     }
 };
+
+export const searchMovies = async (query) => {
+    try {
+        const response = await fetch(`${BASE_URL}/search/movie?query=${encodeURIComponent(query)}&language=uk-UA`, getOptions);
+        if (!response.ok) throw new Error(`API error: ${response.status}`);
+        const json = await response.json();
+        const result = TMDBResponseSchema.safeParse(json);
+        if (!result.success) {
+            console.error(`Error validating API data: ${result.error.format()}`);
+            throw new Error("The data from the API does not match the expected format");
+        }
+        return result.data.results        
+    } catch (error) {
+        console.error(`Error querying TMDB: ${error.message}`);
+        throw error;        
+    }
+}
