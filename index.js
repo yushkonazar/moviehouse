@@ -11,6 +11,14 @@ const __dirname = path.dirname(__filename);
 
 dotenv.config();
 
+const requiredEnvVars = ['TMDB_READ_ACCESS_TOKEN'];
+for (const envVar of requiredEnvVars) {
+    if (!process.env[envVar]) {
+        console.error(`❌ Missing required environment variable: ${envVar}`);
+        process.exit(1);
+    }
+}
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -48,7 +56,27 @@ app.get("/search", async (req, res) => {
         const movies = await searchMovies(query);
         res.render("search", { query, movies, heroHeader: false, heroFooter: false});
     } catch (error) {
-        res.status(500).render("error", { message: error.message, heroHeader: false, heroFooter: true })
+        res.status(500).render("error", { message: error.message, heroHeader: false, heroFooter: true });
+    }
+});
+
+app.get("/api/trending", async (req, res) => {
+    try {
+        const page = req.query.page || 1;
+        const movies = await getPopularMovies(page);
+        res.json(movies);
+    } catch (error) {
+        res.status(500).render("error", { message: error.message, heroHeader: false, heroFooter: true });
+    }
+});
+
+app.get("/api/toprated", async (req, res) => {
+    try {
+        const page = req.query.page || 1;
+        const movies = await getTopRatedMovies(page);
+        res.json(movies);
+    } catch (error) {
+        res.status(500).render("error", { message: error.message, heroHeader: false, heroFooter: true });
     }
 });
 

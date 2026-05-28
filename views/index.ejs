@@ -14,7 +14,7 @@
         </p>
         <div class="flex gap-4 justify-center">
             <a href="#"
-            onclick="window.scrollTo({top: 0, behavior: 'smooth'}); setTimeout(() => document.querySelector('input[name=q]').focus(), 600); return false;"
+            onclick="window.scrollTo({top: 0, behavior: 'smooth'}); setTimeout(() => document.querySelector('input[name=q]').focus(), 400); return false;"
             class="inline-block bg-red-600 hover:bg-red-500 text-white px-8 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105">
                 Почати пошук
             </a>
@@ -59,6 +59,13 @@
                     </div>                    
                 </a>
             <% }) %>
+                <button 
+                    id="load-more-trending"
+                    onclick="loadMore('trending')"
+                    class="shrink-0 w-44 h-[304px] bg-gray-800 hover:bg-red-600 rounded-lg text-white text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2 flex-col">
+                    <span class="text-2xl">+</span>
+                    Завантажити ще
+                </button>
         </div>
     </div>
 
@@ -94,6 +101,13 @@
                     </div>
                 </a>
             <% }) %>
+                <button 
+                    id="load-more-toprated"
+                    onclick="loadMore('toprated')"
+                    class="shrink-0 w-44 h-[304px] bg-gray-800 hover:bg-red-600 rounded-lg text-white text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2 flex-col">
+                    <span class="text-2xl">+</span>
+                    Завантажити ще
+                </button>
         </div>
     </div>
 </main>

@@ -13,9 +13,9 @@ const getOptions = {
     }
 };
 
-export const getPopularMovies = async () => {
+export const getPopularMovies = async (page = 1) => {
     try {
-        const response = await fetch(`${BASE_URL}/movie/popular?language=uk-UA&page=1`, getOptions);
+        const response = await fetch(`${BASE_URL}/movie/popular?language=uk-UA&page=${page}`, getOptions);
 
         if (!response.ok) throw new Error(`API error: ${response.status}`);
 
@@ -66,9 +66,9 @@ export const searchMovies = async (query) => {
     }
 };
 
-export const getTopRatedMovies = async () => {
+export const getTopRatedMovies = async (page = 1) => {
     try {
-        const response = await fetch(`${BASE_URL}/movie/top_rated?language=uk-UA&page=1`, getOptions);
+        const response = await fetch(`${BASE_URL}/movie/top_rated?language=uk-UA&page=${page}`, getOptions);
         if (!response.ok) throw new Error(`API error: ${response.status}`);
         const json = await response.json();
         const result = TMDBResponseSchema.safeParse(json);
@@ -81,4 +81,4 @@ export const getTopRatedMovies = async () => {
         console.error(`Error querying TMDB: ${error.message}`);
         throw error;        
     }
-}
+};
