@@ -1,12 +1,16 @@
 <%- include('partials/header') %>
 
-<main class="container mx-auto py-20 px-4 text-center">
-    <h2 class="text-6xl font-bold text-red-500 mb-4">500</h2>
-    <p class="text-xl text-gray-400 mb-8">Щось пішло не так</p>
-    <p class="text-gray-500 mb-10"><%= message %></p>
-    <a href="/" class="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg transition-colors">
-        На головну
-    </a>
+<main class="relative flex-1 flex items-center justify-center"
+      style="background-image: url('/images/500bg.png'); background-size: cover; background-position: center;">
+    <div class="absolute inset-0 bg-black/70"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"></div>
+    <div class="relative z-10 text-center">
+        <h2 class="text-9xl font-bold text-red-500 mb-4">500</h2>
+        <p class="text-xl text-gray-400 mb-8">Уп-с помилка сервера.<br>Поверніться пізніше</p>
+        <a href="/" class="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg transition-colors">
+            На головну
+        </a>
+    </div>
 </main>
 
 <%- include('partials/footer') %>

@@ -8,8 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/output.css">
 </head>
-<body class="bg-gray-900 text-white">
-    <nav class="fixed top-0 left-0 right-0 z-50 p-6 <%= heroHeader ? 'bg-gradient-to-b from-black/80 to-transparent' : 'bg-black/30 backdrop-blur-sm border-b border-white/10 nav-burn' %>">
+<body class="bg-gray-900 text-white min-h-screen flex flex-col">
+    <nav class="fixed top-0 left-0 right-0 z-50 p-6 <%= heroHeader ? 'bg-gradient-to-b from-black/80 to-transparent' : 'bg-black/30 backdrop-blur-sm border-b border-white/10 border-burn' %>">
         <div class="container mx-auto flex justify-between items-center">
             <a href="/" 
                 class="text-4xl font-bold text-red-500 drop-shadow-lg hover:text-red-700 transition-colors duration-200 tracking-wider"
@@ -17,8 +17,6 @@
                 MovieHouse
             </a>
             <div class="flex items-center gap-4">
-                <a href="/" class="p-2 rounded-full hover:bg-gray-800 hover:text-red-400 transition-all duration-200" style="font-family: 'Bebas Neue', sans-serif; text-shadow: 0 0 20px rgba(239, 68, 68, 0.8), 0 0 40px rgba(239, 68, 68, 0.4);">Головна</a>
-                <a href="/popular" class="p-2 rounded-full hover:bg-gray-800 hover:text-red-400 transition-all duration-200" style="font-family: 'Bebas Neue', sans-serif; text-shadow: 0 0 20px rgba(239, 68, 68, 0.8), 0 0 40px rgba(239, 68, 68, 0.4);">Популярне</a>
                 <form action="/search" method="get" class="flex items-center">
                         <input 
                             type="text"

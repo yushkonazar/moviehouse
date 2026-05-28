@@ -1,11 +1,11 @@
-    <footer class="border-t border-gray-800 py-8 text-center text-gray-500 text-sm">
+    <footer class="z-10 py-8 text-center text-gray-500 text-sm <%= heroFooter ? 'border-t border-white/10 border-burn' : 'border-t border-gray-800' %>">
         <p>© <%= new Date().getFullYear() %> MovieHouse. Дані надані <a href="https://www.themoviedb.org" class="text-red-400 hover:underline" target="_blank" rel="noopener noreferrer">TMDB</a>.</p>
     </footer>
     <script>
-        function slide(id, diraction) {
+        function slide(id, direction) {
             const container = document.getElementById(id);
             container.scrollBy({
-                left: diraction * 500,
+                left: direction * 500,
                 behavior: 'smooth'
             });
         }
