@@ -3,3 +3,25 @@
 @theme {
     --font-sans: 'Inter', sans-serif;
 }
+
+@keyframes burn {
+    0%, 100% { 
+        box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3), 0 4px 30px rgba(239, 68, 68, 0.1);
+    }
+    50% { 
+        box-shadow: 0 4px 25px rgba(239, 68, 68, 0.6), 0 4px 50px rgba(239, 68, 68, 0.3);
+    }
+}
+
+.nav-burn {
+    animation: burn 2s ease-in-out infinite;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}

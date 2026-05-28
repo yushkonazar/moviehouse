@@ -64,4 +64,21 @@ export const searchMovies = async (query) => {
         console.error(`Error querying TMDB: ${error.message}`);
         throw error;        
     }
+};
+
+export const getTopRatedMovies = async () => {
+    try {
+        const response = await fetch(`${BASE_URL}/movie/top_rated?language=uk-UA&page=1`, getOptions);
+        if (!response.ok) throw new Error(`API error: ${response.status}`);
+        const json = await response.json();
+        const result = TMDBResponseSchema.safeParse(json);
+        if (!result.success) {
+            console.error(`Error validating API data: ${result.error.format()}`);
+            throw new Error('The data from the API does not match the expected format');
+        }
+        return result.data.results
+    } catch (error) {
+        console.error(`Error querying TMDB: ${error.message}`);
+        throw error;        
+    }
 }

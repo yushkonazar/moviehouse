@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
-import { getMovieById, getPopularMovies, searchMovies } from "./src/services/tmdbService.js"
+import { getMovieById, getPopularMovies, getTopRatedMovies, searchMovies } from "./src/services/tmdbService.js"
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -20,8 +20,11 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", async (req, res) => {
     try {
-        const movies = await getPopularMovies();
-        res.render("index", { movies, transparentHeader: false  })    
+        const [trending, popular] = await Promise.all([
+            getPopularMovies(),
+            getTopRatedMovies()
+        ]);
+        res.render("index", { trending, popular, heroHeader: false  })    
     } catch (error) {
         res.status(500).render("error", { message: error.message });
     }
@@ -31,7 +34,7 @@ app.get("/movie/:id", async (req, res) => {
     try {
         const id = req.params.id;
         const movie = await getMovieById(id);
-        res.render("movie", { movie, transparentHeader: true  });
+        res.render("movie", { movie, heroHeader: true  });
     } catch (error) {
         res.status(500).render("error", { message: error.message });
     }
@@ -40,9 +43,9 @@ app.get("/movie/:id", async (req, res) => {
 app.get("/search", async (req, res) => {
     try {
         const query = req.query.q;
-        if (!query) return res.render("search", { query: '', movies: [], transparentHeader: false })
+        if (!query) return res.render("search", { query: '', movies: [], heroHeader: false })
         const movies = await searchMovies(query);
-        res.render("search", { query, movies, transparentHeader: false });
+        res.render("search", { query, movies, heroHeader: false });
     } catch (error) {
         res.status(500).render("error", { message: error.message })
     }
