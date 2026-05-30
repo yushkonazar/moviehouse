@@ -113,8 +113,10 @@ app.get("/search", async (req, res) => {
 
         let movies = [];
 
-        if (q) {
-            movies = await searchMovies(q);
+        if (q && hasFilters) {
+            movies = await discoverMovies({ ...filters, with_text_query: q });
+        } else if (q) {
+            movies = await searchMovies(q, 1);
         } else if (hasFilters) {
             movies = await discoverMovies(filters);
         }
@@ -146,10 +148,12 @@ app.get("/api/search", async (req, res) => {
         if (sort_by) filters.sort_by = sort_by;
 
         let movies = [];
-        if (q) {
-            movies = await searchMovies(q, page);
-        } else if (Object.keys(filters).length > 0) {
-            movies = await discoverMovies(filters, page);
+        if (q && hasFilters) {
+            movies = await discoverMovies({ ...filters, with_text_query: q });
+        } else if (q) {
+            movies = await searchMovies(q, 1);
+        } else if (hasFilters) {
+            movies = await discoverMovies(filters);
         }
 
         res.json(movies);

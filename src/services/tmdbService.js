@@ -49,9 +49,16 @@ export const getMovieById = async (id) => {
     }
 };
 
-export const searchMovies = async (query, page = 1) => {
+export const searchMovies = async (query, page = 1, filters = {}) => {
     try {
-        const response = await fetch(`${BASE_URL}/search/movie?query=${encodeURIComponent(query)}&page=${page}&language=uk-UA`, getOptions);
+        const params = new URLSearchParams({
+            query: encodeURIComponent(query),
+            language: 'uk-UA',
+            page,
+            ...filters
+        });
+
+        const response = await fetch(`${BASE_URL}/search/movie?${params.toString()}`, getOptions);
         if (!response.ok) throw new Error(`API error: ${response.status}`);
         const json = await response.json();
         const result = TMDBResponseSchema.safeParse(json);
