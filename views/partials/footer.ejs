@@ -57,72 +57,7 @@
                 btn.innerHTML = '<span>⚠</span> Помилка';
                 btn.disabled = false;
             }
-        }
-
-        let searchPage = 1;
-        const searchQuery = <%- JSON.stringify(query) %>;
-        const searchFilters = <%- JSON.stringify(filters) %>;
-
-        async function loadMoreSearch() {
-            searchPage++;
-            
-            const btn = document.getElementById('load-more-search');
-            btn.textContent = 'Завантаження...';
-            btn.disabled = true;
-
-            try {
-                const params = new URLSearchParams({ 
-                    page: searchPage,
-                    q: searchQuery,
-                    ...searchFilters 
-                });
-                
-                const response = await fetch(`/api/search?${params.toString()}`);
-                const movies = await response.json();
-
-                if (movies.length === 0) {
-                    btn.textContent = 'Більше немає';
-                    return;
-                }
-
-                const container = document.getElementById('search-results');
-                
-                movies.forEach(movie => {
-                    const poster = movie.poster_path 
-                        ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` 
-                        : '/images/no-poster.svg';
-                    const year = movie.release_date 
-                        ? movie.release_date.split('-')[0] 
-                        : '—';
-
-                    const card = document.createElement('a');
-                    card.href = `/movie/${movie.id}`;
-                    card.className = 'bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300 block';
-                    card.innerHTML = `
-                        <img src="${poster}" alt="${movie.title}" class="w-full h-[450px] object-cover">
-                        <div class="p-4">
-                            <h3 class="font-bold text-lg truncate">${movie.title}</h3>
-                            <div class="flex justify-between items-center mt-2 text-sm text-gray-400">
-                                <span>${year}</span>
-                                <span class="text-yellow-500 font-semibold">⭐ ${movie.vote_average.toFixed(1)}</span>
-                            </div>
-                        </div>
-                    `;
-                    container.appendChild(card);
-                });
-
-                btn.textContent = 'Завантажити ще';
-                btn.disabled = false;
-
-            } catch (error) {
-                console.error('Error:', error);
-                btn.textContent = 'Помилка';
-                setTimeout(() => {
-                    btn.textContent = 'Завантажити ще';
-                }, 1000);
-                btn.disabled = false;
-            }
-        }
+        };
     </script>
 </body>
 </html>
