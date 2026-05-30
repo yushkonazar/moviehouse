@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node --watch index.js",
+    "dev": "concurrently \"node --watch index.js\" \"npx @tailwindcss/cli -i ./public/css/style.css -o ./public/css/output.css --watch\"",
     "css": "npx @tailwindcss/cli -i ./public/css/style.css -o ./public/css/output.css --watch",
-    "start": "concurrently \"npm run dev\" \"npm run css\""
+    "build": "npx @tailwindcss/cli -i ./public/css/style.css -o ./public/css/output.css",
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
