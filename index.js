@@ -93,7 +93,7 @@ app.get("/movie/:id", async (req, res) => {
             return res.status(404).render("404", { heroHeader: false, heroFooter: true, showSearch: true });
         }        
         const movie = await getMovieById(id);
-        res.render("movie", { movie, heroHeader: true, heroFooter: false});
+        res.render("movie", { movie, heroHeader: true, heroFooter: false, showSearch: true});
     } catch (error) {
         console.error(error);
         res.status(500).render("error", { message: getErrorMessage(error), heroHeader: false, heroFooter: true, showSearch: true });
