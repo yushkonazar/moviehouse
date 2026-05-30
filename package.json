@@ -27,8 +27,6 @@
     "@tailwindcss/cli": "^4.3.0"
   },
   "devDependencies": {
-    "@tailwindcss/cli": "^4.3.0",
-    "concurrently": "^9.2.1",
-    "tailwindcss": "^4.3.0"
+    "concurrently": "^9.2.1"
   }
 }
