@@ -38,11 +38,11 @@ npm install
 ```
 
 ### Налаштування змінних середовища
-
+```bash
 Створи файл `.env` в корені проєкту:
 TMDB_READ_ACCESS_TOKEN=твій_токен
 PORT=3000
-
+```
 Токен отримай на [themoviedb.org](https://www.themoviedb.org/settings/api) у розділі Settings → API.
 
 ### Запуск
@@ -54,6 +54,7 @@ npm run start
 Застосунок буде доступний на `http://localhost:3000`
 
 ## Структура проєкту
+```bash
 moviehouse/
 ├── public/
 │   ├── css/          # Tailwind output
@@ -66,7 +67,7 @@ moviehouse/
 │   └── *.ejs         # Сторінки
 ├── index.js          # Точка входу
 └── package.json
-
+```
 ## Плани розвитку
 
 - Серіали — окремі слайдери і сторінки
