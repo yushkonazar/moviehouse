@@ -7,6 +7,7 @@ import { discoverMovies, getGenres, getMovieById, getPopularMovies, getTopRatedM
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import NodeCache from 'node-cache';
+import { error } from "console";
 
 const cache = new NodeCache({ stdTTL: 300 });
 const __filename = fileURLToPath(import.meta.url);
@@ -155,6 +156,8 @@ app.get("/api/search", async (req, res) => {
         } else if (hasFilters) {
             movies = await discoverMovies(filters);
         }
+
+        q && hasFilters ? movies = await discoverMovies({ ...filters, with_text_query: q }) : q ? movies = await searchMovies(q, 1) : hasFilters ? movies = await discoverMovies(filters) : console.error(error)
 
         res.json(movies);
     } catch (error) {

@@ -52,7 +52,7 @@ export const getMovieById = async (id) => {
 export const searchMovies = async (query, page = 1, filters = {}) => {
     try {
         const params = new URLSearchParams({
-            query: encodeURIComponent(query),
+            query,
             language: 'uk-UA',
             page,
             ...filters
