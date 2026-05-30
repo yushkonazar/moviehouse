@@ -37,16 +37,36 @@
                     const card = document.createElement('a');
                     card.href = `/movie/${movie.id}`;
                     card.className = 'shrink-0 w-44 bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300 block';
-                    card.innerHTML = `
-                        <img src="${poster}" alt="${movie.title}" class="w-full h-64 object-cover">
-                        <div class="p-3">
-                            <h3 class="font-bold text-sm truncate">${movie.title}</h3>
-                            <div class="flex justify-between items-center mt-1 text-xs text-gray-400">
-                                <span>${year}</span>
-                                <span class="text-yellow-500 font-semibold">⭐ ${movie.vote_average.toFixed(1)}</span>
-                            </div>
-                        </div>
-                    `;
+
+                    const img = document.createElement('img');
+                    img.src = poster;
+                    img.alt = movie.title;
+                    img.className = 'w-full h-64 object-cover';
+
+                    const info = document.createElement('div');
+                    info.className = 'p-3';
+
+                    const h3 = document.createElement('h3');
+                    h3.className = 'font-bold text-sm truncate';
+                    h3.textContent = movie.title;
+
+                    const meta = document.createElement('div');
+                    meta.className = 'flex justify-between items-center mt-1 text-xs text-gray-400';
+
+                    const yearSpan = document.createElement('span');
+                    yearSpan.textContent = year;
+
+                    const ratingSpan = document.createElement('span');
+                    ratingSpan.className = 'text-yellow-500 font-semibold';
+                    ratingSpan.textContent = `⭐ ${movie.vote_average.toFixed(1)}`;
+
+                    meta.appendChild(yearSpan);
+                    meta.appendChild(ratingSpan);
+                    info.appendChild(h3);
+                    info.appendChild(meta);
+                    card.appendChild(img);
+                    card.appendChild(info);
+
                     container.insertBefore(card, btn);
                 });
 
