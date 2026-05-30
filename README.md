@@ -1,18 +1,20 @@
+> [Читати українською](README.uk.md)
+
 # 🎬 MovieHouse
 
-Веб-застосунок для пошуку та перегляду інформації про фільми, побудований на базі TMDB API.
+A web application for searching and browsing movie information, built on top of the TMDB API.
 
-Проєкт створений в рамках вивчення Full-Stack Web Development і демонструє роботу з REST API, серверним рендерингом, валідацією даних та сучасними підходами до розробки.
+The project was created as part of a Full-Stack Web Development learning path and demonstrates working with REST APIs, server-side rendering, data validation, and modern development practices.
 
 ## 🔗 Live Demo
 
 [moviehouse-mou1.onrender.com](https://moviehouse-mou1.onrender.com)
 
-> Безкоштовний хостинг — перший запит може займати до 30 секунд через "засинання" сервера.
+> Free hosting — the first request may take up to 30 seconds due to server spin-up after inactivity.
 
 <img width="1902" height="864" alt="image" src="https://github.com/user-attachments/assets/0f65e044-c55d-4237-9ac5-dcd72d990d40" />
 
-## Технології
+## Tech Stack
 
 - **Backend:** Node.js, Express.js
 - **Templating:** EJS
@@ -23,25 +25,25 @@
 - **Logging:** Morgan
 - **Data:** TMDB API
 
-## Функціонал
+## Features
 
-- Перегляд популярних фільмів та топ рейтингу у вигляді горизонтальних слайдерів
-- Детальна сторінка фільму з постером, описом, жанрами, бюджетом та касовими зборами
-- Пошук фільмів за назвою
-- Розширена фільтрація за жанром, роком, рейтингом та сортуванням
-- Посилання на стрімінгові сервіси (Rezka, Sweet.tv, КиївстарТВ, UAKino)
-- Пагінація через кнопку "Завантажити ще" для слайдерів і результатів пошуку
-- Кешування відповідей API (5 хвилин)
-- Захист від надмірних запитів (rate limiting)
-- Сторінки помилок 404 і 500
+- Browse popular and top-rated movies in horizontal carousel sliders
+- Movie detail page with poster, description, genres, budget and box office revenue
+- Search movies by title
+- Advanced filtering by genre, release year, rating and sort order
+- Links to streaming services (Rezka, Sweet.tv, KyivstarTV, UAKino)
+- "Load more" pagination for sliders and search results
+- API response caching (5-minute TTL)
+- Rate limiting protection against excessive requests
+- Custom 404 and 500 error pages
 
-## Запуск локально
+## Getting Started
 
-### Вимоги
+### Requirements
 - Node.js 18+
-- Акаунт на [TMDB](https://www.themoviedb.org) для отримання API токену
+- A [TMDB](https://www.themoviedb.org) account to obtain an API token
 
-### Встановлення
+### Installation
 
 ```bash
 git clone https://github.com/yushkonazar/moviehouse.git
@@ -49,59 +51,62 @@ cd moviehouse
 npm install
 ```
 
-### Налаштування змінних середовища
+### Environment Variables
+
+Create a `.env` file in the project root:
 ```bash
-Створи файл `.env` в корені проєкту:
-TMDB_READ_ACCESS_TOKEN=твій_токен
+TMDB_READ_ACCESS_TOKEN=your_token_here
 PORT=3000
 NODE_ENV=development
 ```
-Токен отримай на [themoviedb.org](https://www.themoviedb.org/settings/api) у розділі Settings → API.
+Get your token at [themoviedb.org](https://www.themoviedb.org/settings/api) under Settings → API.
 
-### Запуск
+### Running
 
 ```bash
 npm run start
 ```
-Для розробки з автоперезапуском:
+For development with auto-restart:
 
 ```bash
 npm run dev
 ```
 
-Застосунок буде доступний на `http://localhost:3000`
+The app will be available at `http://localhost:3000`
 
-## Структура проєкту
-```bash
+## Project Structure
+
+```
 moviehouse/
 ├── public/
 │   ├── css/          # Tailwind output
-│   └── images/       # Статичні зображення
+│   └── images/       # Static assets
 ├── src/
-│   ├── schemas/      # Zod схеми валідації
-│   └── services/     # Сервіси для роботи з TMDB API
+│   ├── schemas/      # Zod validation schemas
+│   └── services/     # TMDB API service layer
 ├── views/
 │   ├── partials/     # Header, Footer
-│   └── *.ejs         # Сторінки
-├── index.js          # Точка входу
-├── .env.example      # Шаблон змінних середовища
+│   └── *.ejs         # Page templates
+├── index.js          # Entry point
+├── .env.example      # Environment variable template
 └── package.json
 ```
-## Безпека
+
+## Security
 
 - `helmet` — HTTP security headers
-- `express-rate-limit` — захист від DDoS та надмірних запитів
-- Валідація вхідних даних через Zod
-- Санітизація повідомлень про помилки на продакшені
-- XSS захист при динамічному рендерингу DOM елементів
+- `express-rate-limit` — DDoS and excessive request protection
+- Input validation via Zod
+- Error message sanitization in production
+- XSS protection for dynamic DOM rendering
 
-## Плани розвитку
+## Roadmap
 
-- Серіали — окремі слайдери і сторінки
-- Сторінки жанрів
-- Авторизація і список обраного
-- Розширена фільтрація в пошуку (комбінований текст + фільтри)
+- TV Shows — dedicated sliders and detail pages
+- Genre pages
+- User authentication and watchlist
+- Combined search with text + filters
 
-## Автор
+## Author
 
-[Юшко Назар](https://github.com/yushkonazar)
+[Nazar Yushko](https://github.com/yushkonazar)
