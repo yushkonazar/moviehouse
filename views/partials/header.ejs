@@ -13,7 +13,7 @@
     <nav class="fixed top-0 left-0 right-0 z-50 p-6 <%= heroHeader ? 'bg-gradient-to-b from-black/80 to-transparent' : 'bg-black/30 backdrop-blur-sm border-b border-white/10 border-burn' %>">
         <div class="container mx-auto flex justify-between items-center">
             <a href="/" 
-                class="text-4xl font-bold text-red-500 drop-shadow-lg hover:text-red-700 transition-colors duration-200 tracking-wider"
+                class="text-3xl md:text-4xl font-bold text-red-500 drop-shadow-lg hover:text-red-700 transition-colors duration-200 tracking-wider"
                 style="font-family: 'Bebas Neue', sans-serif; text-shadow: 0 0 20px rgba(239, 68, 68, 0.8), 0 0 40px rgba(239, 68, 68, 0.4);">
                 MovieHouse
             </a>
@@ -26,7 +26,7 @@
                             autocomplete="off"
                             maxlength="80"
                             value="<%= typeof query !== 'undefined' ? query : '' %>"
-                            class="bg-gray-800 text-white text-sm px-4 py-2 outline-none border border-gray-700 focus:border-red-500 transition-all duration-300 w-36 focus:w-64 rounded-l-full"
+                            class="bg-gray-800 text-white text-sm px-4 py-2 outline-none border border-gray-700 focus:border-red-500 transition-all duration-300 w-20 focus:w-40 md:w-36 md:focus:w-64 rounded-l-full"
                             >
                         <button 
                             type="submit"
