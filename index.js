@@ -79,10 +79,10 @@ app.get("/", async (req, res) => {
             getCached('trending_1', () => getPopularMovies()),
             getCached('popular_1', () => getTopRatedMovies())
         ]);
-        res.render("index", { trending, popular, heroHeader: false, heroFooter: false})    
+        res.render("index", { trending, popular, heroHeader: false, heroFooter: false, showSearch: true})    
     } catch (error) {
         console.error(error);
-        res.status(500).render("error", { message: getErrorMessage(error), heroHeader: false, heroFooter: true });
+        res.status(500).render("error", { message: getErrorMessage(error), heroHeader: false, heroFooter: true, showSearch: true });
     }
 });
 
@@ -90,13 +90,13 @@ app.get("/movie/:id", async (req, res) => {
     try {
         const id = parseInt(req.params.id);
         if (isNaN(id) || id <= 0) {
-            return res.status(404).render("404", { heroHeader: false, heroFooter: true });
+            return res.status(404).render("404", { heroHeader: false, heroFooter: true, showSearch: true });
         }        
         const movie = await getMovieById(id);
         res.render("movie", { movie, heroHeader: true, heroFooter: false});
     } catch (error) {
         console.error(error);
-        res.status(500).render("error", { message: getErrorMessage(error), heroHeader: false, heroFooter: true });
+        res.status(500).render("error", { message: getErrorMessage(error), heroHeader: false, heroFooter: true, showSearch: true });
     }
 });
 
@@ -108,7 +108,7 @@ app.get("/search", async (req, res) => {
         if (with_genres) filters.with_genres = with_genres;
         if (primary_release_year) filters.primary_release_year = primary_release_year;
         if (voteGte) filters['vote_average.gte'] = voteGte;
-        if (sort_by) filters.sort_by = sort_by;
+        filters.sort_by = sort_by || 'popularity.desc';
 
         const hasFilters = Object.keys(filters).length > 0;
 
@@ -130,11 +130,12 @@ app.get("/search", async (req, res) => {
             genres: genres.genres,
             filters,
             heroHeader: false,
-            heroFooter: false
+            heroFooter: false,
+            showSearch: false
         });
     } catch (error) {
         console.error(error);
-        res.status(500).render("error", { message: getErrorMessage(error), heroHeader: false, heroFooter: true });
+        res.status(500).render("error", { message: getErrorMessage(error), heroHeader: false, heroFooter: true, showSearch: true });
     }
 });
 
@@ -146,7 +147,7 @@ app.get("/api/search", async (req, res) => {
         if (with_genres) filters.with_genres = with_genres;
         if (primary_release_year) filters.primary_release_year = primary_release_year;
         if (voteGte) filters['vote_average.gte'] = voteGte;
-        if (sort_by) filters.sort_by = sort_by;
+        filters.sort_by = sort_by || 'popularity.desc';
 
         let movies = [];
         if (q && hasFilters) {
@@ -156,8 +157,6 @@ app.get("/api/search", async (req, res) => {
         } else if (hasFilters) {
             movies = await discoverMovies(filters);
         }
-
-        q && hasFilters ? movies = await discoverMovies({ ...filters, with_text_query: q }) : q ? movies = await searchMovies(q, 1) : hasFilters ? movies = await discoverMovies(filters) : console.error(error)
 
         res.json(movies);
     } catch (error) {
@@ -189,7 +188,7 @@ app.get("/api/toprated", async (req, res) => {
 });
 
 app.use((req, res) => {
-    res.status(404).render("404", {heroHeader: false, heroFooter: true});
+    res.status(404).render("404", {heroHeader: false, heroFooter: true, showSearch: true});
 });
 
 app.listen(PORT, () => {

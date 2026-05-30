@@ -18,22 +18,24 @@
                 MovieHouse
             </a>
             <div class="flex items-center gap-4">
-                <form action="/search" method="get" class="flex items-center">
-                        <input 
-                            type="text"
-                            name="q"
-                            placeholder="Пошук фільму..."
-                            autocomplete="off"
-                            maxlength="80"
-                            value="<%= typeof query !== 'undefined' ? query : '' %>"
-                            class="bg-gray-800 text-white text-sm px-4 py-2 outline-none border border-gray-700 focus:border-red-500 transition-all duration-300 w-20 focus:w-40 md:w-36 md:focus:w-64 rounded-l-full"
-                            >
-                        <button 
-                            type="submit"
-                            class="bg-red-600 hover:bg-red-500 text-white text-sm px-4 py-2 rounded-r-full border border-red-600 hover:border-red-500 transition-colors duration-200">
-                            <img src="/images/search-icon.svg" alt="Пошук" class="w-5 h-5 invert">
-                        </button>
-                </form>
+                <% if (showSearch) { %>
+                    <form action="/search" method="get" class="flex items-center">
+                            <input 
+                                type="text"
+                                name="q"
+                                placeholder="Пошук фільму..."
+                                autocomplete="off"
+                                maxlength="80"
+                                value="<%= typeof query !== 'undefined' ? query : '' %>"
+                                class="bg-gray-800 text-white text-sm px-4 py-2 outline-none border border-gray-700 focus:border-red-500 transition-all duration-300 w-20 focus:w-40 md:w-36 md:focus:w-64 rounded-l-full"
+                                >
+                            <button 
+                                type="submit"
+                                class="bg-red-600 hover:bg-red-500 text-white text-sm px-4 py-2 rounded-r-full border border-red-600 hover:border-red-500 transition-colors duration-200">
+                                <img src="/images/search-icon.svg" alt="Пошук" class="w-5 h-5 invert">
+                            </button>
+                    </form>
+                <% } %>
             </div>
         </div>
     </nav>
