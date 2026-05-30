@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
-import { getMovieById, getPopularMovies, getTopRatedMovies, searchMovies } from "./src/services/tmdbService.js"
+import { discoverMovies, getGenres, getMovieById, getPopularMovies, getTopRatedMovies, searchMovies } from "./src/services/tmdbService.js"
 import { fa } from "zod/v4/locales";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -51,12 +51,59 @@ app.get("/movie/:id", async (req, res) => {
 
 app.get("/search", async (req, res) => {
     try {
-        const query = req.query.q;
-        if (!query) return res.render("search", { query: '', movies: [], heroHeader: false, heroFooter: false})
-        const movies = await searchMovies(query);
-        res.render("search", { query, movies, heroHeader: false, heroFooter: false});
+        const {q, with_genres, primary_release_year, 'vote_average.gte': voteGte, sort_by} = req.query;
+
+        const filters = {};
+        if (with_genres) filters.with_genres = with_genres;
+        if (primary_release_year) filters.primary_release_year = primary_release_year;
+        if (voteGte) filters['vote_average.gte'] = voteGte;
+        if (sort_by) filters.sort_by = sort_by;
+
+        const hasFilters = Object.keys(filters).length > 0;
+
+        let movies = [];
+
+        if (q) {
+            movies = await searchMovies(q);
+        } else if (hasFilters) {
+            movies = await discoverMovies(filters);
+        }
+
+        const genres = await getGenres();
+    
+        res.render("search", { 
+            query: q || '',
+            movies,
+            genres: genres.genres,
+            filters,
+            heroHeader: false,
+            heroFooter: false
+        });
     } catch (error) {
         res.status(500).render("error", { message: error.message, heroHeader: false, heroFooter: true });
+    }
+});
+
+app.get("/api/search", async (req, res) => {
+    try {
+        const { q, page = 1, with_genres, primary_release_year, 'vote_average.gte': voteGte, sort_by } = req.query;
+
+        const filters = {};
+        if (with_genres) filters.with_genres = with_genres;
+        if (primary_release_year) filters.primary_release_year = primary_release_year;
+        if (voteGte) filters['vote_average.gte'] = voteGte;
+        if (sort_by) filters.sort_by = sort_by;
+
+        let movies = [];
+        if (q) {
+            movies = await searchMovies(q, page);
+        } else if (Object.keys(filters).length > 0) {
+            movies = await discoverMovies(filters, page);
+        }
+
+        res.json(movies);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
 });
 

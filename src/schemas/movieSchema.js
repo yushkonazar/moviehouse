@@ -28,6 +28,13 @@ export const MovieDetailsSchema = z.object({
     }))
 });
 
+export const GenresSchema = z.object({
+    genres: z.array(z.object({
+        id: z.number(),
+        name: z.string()
+    }))
+});
+
 export const TMDBResponseSchema = z.object({
     results: z.array(MovieSchema)
 });

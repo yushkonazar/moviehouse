@@ -1,12 +1,83 @@
 <%- include('partials/header') %>
 
-<main class="container mx-auto pt-32 pb-10 px-4">
-    <h2 class="text-3xl font-bold mb-8">
-        Результати за запитом: "<span class="text-red-500"><%= query %></span>" 
-        <span class="text-gray-400 text-3xl font-bold">(<%= movies.length %>)</span>
-    </h2>
+<main class="flex-1 container mx-auto pt-32 pb-10 px-4">
+    <form action="/search" method="get" class="bg-gray-800 rounded-2xl p-6 mb-8">
+        <div class=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            <input
+                type="text"
+                name="q"
+                placeholder="Назва фільму..."
+                value="<%= query %>"
+                autocomplete="off"
+                class="bg-gray-700 text-white text-sm px-4 py-2.5 rounded-lg outline-none border border-gray-600 focus:border-red-500 transition-colors duration-200"
+            >
+
+            <select name="with_genres" class="bg-gray-700 text-white text-sm px-4 py-2.5 rounded-lg outline-none border border-gray-600 focus:border-red-500 transition-colors duration-200">
+                <option value="">Всі жанри</option>
+                <% genres.forEach((genre) => { %>
+                    <option value="<%= genre.id %>" <%= filters.with_genres == genre.id ? 'selected' : '' %>>
+                        <%= genre.name %>
+                    </option>
+                <% }); %>
+            </select>
+
+            <input
+                type="number"
+                name="primary_release_year"
+                placeholder="Рік (напр. 2024)"
+                value="<%= filters.primary_release_year || '' %>"
+                min="1900"
+                max="<%= new Date().getFullYear() %>"
+                class="bg-gray-700 text-white text-sm px-4 py-2.5 rounded-lg outline-none border border-gray-600 focus:border-red-500 transition-colors duration-200"
+            >
+
+            <select name="vote_average.gte" class="bg-gray-700 text-white text-sm px-4 py-2.5 rounded-lg outline-none border border-gray-600 focus:border-red-500 transition-colors duration-200">
+                <option value="">Будь-який рейтинг</option>
+                <option value="9" <%= filters['vote_average.gte'] == 9 ? 'selected' : '' %>>9+</option>
+                <option value="8" <%= filters['vote_average.gte'] == 8 ? 'selected' : '' %>>8+</option>
+                <option value="7" <%= filters['vote_average.gte'] == 7 ? 'selected' : '' %>>7+</option>
+                <option value="6" <%= filters['vote_average.gte'] == 6 ? 'selected' : '' %>>6+</option>
+            </select>
+
+            <select name="sort_by" class="bg-gray-700 text-white text-sm px-4 py-2.5 rounded-lg outline-none border border-gray-600 focus:border-red-500 transition-colors duration-200">
+                <option value="popularity.desc" <%= filters.sort_by == 'popularity.desc' ? 'selected' : '' %>>За популярністю</option>
+                <option value="vote_average.desc" <%= filters.sort_by == 'vote_average.desc' ? 'selected' : '' %>>За рейтингом</option>
+                <option value="release_date.desc" <%= filters.sort_by == 'release_date.desc' ? 'selected' : '' %>>За датою</option>
+            </select>
+
+        </div>
+        <div class="flex gap-4 mt-4 justify-center">
+            <button type="submit"
+                class="bg-red-600 hover:bg-red-500 text-white px-8 py-2.5 rounded-lg text-sm font-semibold transition-colors duration-200">
+                Знайти
+            </button>
+            <a href="/search"
+                class="bg-gray-700 hover:bg-gray-600 text-white px-8 py-2.5 rounded-lg text-sm font-semibold transition-colors duration-200">
+                Скинути
+            </a>
+        </div>        
+    </form>
+
+    <% if (query || Object.keys(filters).length > 0) { %>
+        <h2 class="text-2xl font-bold mb-6">
+            <% if (query) { %>
+                Результати за запитом: "<span class="text-red-500"><%= query %></span>"
+            <% } else { %>
+                Результати пошуку
+            <% } %>
+            <span class="text-gray-400 text-2xl font-bold">(<%= movies.length %>)</span>
+        </h2>
+    <% } %>
+
+    <% if ((query || Object.keys(filters).length > 0) && movies.length === 0) { %>
+        <div class="text-center py-20">
+            <p class="text-gray-400 text-xl">Нічого не знайдено</p>
+            <a href="/search" class="text-red-400 hover:text-red-300 mt-4 inline-block">Скинути фільтри</a>
+        </div>
+    <% } %>
+
+    <div id="search-results" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         <% movies.forEach(movie => { %>
             <a href="/movie/<%= movie.id %>" class="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300 block">
                 <img 
@@ -24,6 +95,16 @@
             </a>
         <% }) %>
     </div>
+    <% if ((query || Object.keys(filters).length > 0) && movies.length > 0) { %>
+        <div class="text-center mt-10">
+            <button 
+                id="load-more-search"
+                onclick="loadMoreSearch()"
+                class="bg-gray-800 hover:bg-red-600 text-white px-8 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105">
+                Завантажити ще
+            </button>
+        </div>
+    <% } %>
 </main>
 
 <%- include('partials/footer') %>
