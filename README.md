@@ -10,6 +10,8 @@
 
 > Безкоштовний хостинг — перший запит може займати до 30 секунд через "засинання" сервера.
 
+<img width="1902" height="864" alt="image" src="https://github.com/user-attachments/assets/0f65e044-c55d-4237-9ac5-dcd72d990d40" />
+
 ## Технології
 
 - **Backend:** Node.js, Express.js
