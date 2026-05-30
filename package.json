@@ -22,7 +22,9 @@
     "helmet": "^8.2.0",
     "morgan": "^1.10.1",
     "node-cache": "^5.1.2",
-    "zod": "^4.4.3"
+    "zod": "^4.4.3",
+    "tailwindcss": "^4.3.0",
+    "@tailwindcss/cli": "^4.3.0"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.3.0",
