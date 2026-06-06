@@ -13,8 +13,7 @@
             Відкривай трендові новинки, шукай улюблені фільми та знаходь де їх переглянути.
         </p>
         <div class="flex gap-4 justify-center">
-            <a href="#"
-            onclick="window.scrollTo({top: 0, behavior: 'smooth'}); setTimeout(() => document.querySelector('input[name=q]').focus(), 400); return false;"
+            <a href="#" id="start-search"
             class="inline-block bg-red-600 hover:bg-red-500 text-white px-8 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105">
                 Почати пошук
             </a>
@@ -31,11 +30,11 @@
         <div class="flex justify-between items-center mb-4 px-4">
             <h2 class="text-2xl font-bold">Зараз у тренді</h2>
             <div class="flex gap-2">
-                <button onclick="slide('trending', -1)"
+                <button id="btn-trending-prev"
                         class="w-9 h-9 rounded-full bg-gray-800 hover:bg-red-600 text-white transition-colors duration-300 flex items-center justify-center">
                         ←
                 </button>
-                <button onclick="slide('trending', 1)"
+                <button id="btn-trending-next"
                         class="w-9 h-9 rounded-full bg-gray-800 hover:bg-red-600 text-white transition-colors duration-300 flex items-center justify-center">
                         →
                 </button>
@@ -59,9 +58,8 @@
                     </div>                    
                 </a>
             <% }) %>
-                <button 
+                <button
                     id="load-more-trending"
-                    onclick="loadMore('trending')"
                     class="shrink-0 w-44 h-[304px] bg-gray-800 hover:bg-red-600 rounded-lg text-white text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2 flex-col">
                     <span class="text-2xl">+</span>
                     Завантажити ще
@@ -73,11 +71,11 @@
         <div class="flex justify-between items-center mb-4 px-4">
             <h2 class="text-2xl font-bold">Топ рейтингу</h2>
             <div class="flex gap-2">
-                <button onclick="slide('toprated', -1)" 
+                <button id="btn-toprated-prev"
                     class="w-9 h-9 rounded-full bg-gray-800 hover:bg-red-600 text-white transition-colors duration-200 flex items-center justify-center">
                     ←
                 </button>
-                <button onclick="slide('toprated', 1)" 
+                <button id="btn-toprated-next"
                     class="w-9 h-9 rounded-full bg-gray-800 hover:bg-red-600 text-white transition-colors duration-200 flex items-center justify-center">
                     →
                 </button>
@@ -101,9 +99,8 @@
                     </div>
                 </a>
             <% }) %>
-                <button 
+                <button
                     id="load-more-toprated"
-                    onclick="loadMore('toprated')"
                     class="shrink-0 w-44 h-[304px] bg-gray-800 hover:bg-red-600 rounded-lg text-white text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2 flex-col">
                     <span class="text-2xl">+</span>
                     Завантажити ще

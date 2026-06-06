@@ -60,7 +60,7 @@
         </div>        
     </form>
 
-    <% if (query || Object.keys(filters).length > 0) { %>
+    <% if (query || hasFilters) { %>
         <h2 class="text-2xl font-bold mb-6">
             <% if (query) { %>
                 Результати за запитом: "<span class="text-red-500"><%= query %></span>"
@@ -71,14 +71,17 @@
         </h2>
     <% } %>
 
-    <% if ((query || Object.keys(filters).length > 0) && movies.length === 0) { %>
+    <% if ((query || hasFilters) && movies.length === 0) { %>
         <div class="text-center py-20">
             <p class="text-gray-400 text-xl">Нічого не знайдено</p>
             <a href="/search" class="text-red-400 hover:text-red-300 mt-4 inline-block">Скинути фільтри</a>
         </div>
     <% } %>
 
-    <div id="search-results" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+    <div id="search-results"
+         data-query="<%= encodeURIComponent(query) %>"
+         data-filters="<%= encodeURIComponent(JSON.stringify(filters)) %>"
+         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         <% movies.forEach(movie => { %>
             <a href="/movie/<%= movie.id %>" class="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300 block">
                 <img 
@@ -96,100 +99,15 @@
             </a>
         <% }) %>
     </div>
-    <% if ((query || Object.keys(filters).length > 0) && movies.length > 0) { %>
+    <% if ((query || hasFilters) && movies.length > 0) { %>
         <div class="text-center mt-10">
-            <button 
+            <button
                 id="load-more-search"
-                onclick="loadMoreSearch()"
                 class="bg-gray-800 hover:bg-red-600 text-white px-8 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105">
                 Завантажити ще
             </button>
         </div>
     <% } %>
 </main>
-<script>
-    let searchPage = 1;
-    const searchQuery = <%- JSON.stringify(query) %>;
-    const searchFilters = <%- JSON.stringify(filters) %>;
-
-    async function loadMoreSearch() {
-        searchPage++;            
-        const btn = document.getElementById('load-more-search');
-        btn.textContent = 'Завантаження...';
-        btn.disabled = true;
-
-        try {
-            const params = new URLSearchParams({ 
-                page: searchPage,
-                q: searchQuery,
-                ...searchFilters 
-            });
-                
-            const response = await fetch(`/api/search?${params.toString()}`);
-            const movies = await response.json();
-
-            if (movies.length === 0) {
-                btn.textContent = 'Більше немає';
-                return;
-            }
-
-            const container = document.getElementById('search-results');
-                
-            movies.forEach(movie => {
-                const poster = movie.poster_path 
-                    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` 
-                    : '/images/no-poster.svg';
-                const year = movie.release_date 
-                    ? movie.release_date.split('-')[0] 
-                    : '—';
-
-                const card = document.createElement('a');
-                card.href = `/movie/${movie.id}`;
-                card.className = 'bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300 block';
-
-                const img = document.createElement('img');
-                img.src = poster;
-                img.alt = movie.title;
-                img.className = 'w-full h-[450px] object-cover';
-
-                const info = document.createElement('div');
-                info.className = 'p-4';
-
-                const h3 = document.createElement('h3');
-                h3.className = 'font-bold text-lg truncate';
-                h3.textContent = movie.title;
-
-                const meta = document.createElement('div');
-                meta.className = 'flex justify-between items-center mt-2 text-sm text-gray-400';
-
-                const yearSpan = document.createElement('span');
-                yearSpan.textContent = year;
-
-                const ratingSpan = document.createElement('span');
-                ratingSpan.className = 'text-yellow-500 font-semibold';
-                ratingSpan.textContent = `⭐ ${movie.vote_average.toFixed(1)}`;
-
-                meta.appendChild(yearSpan);
-                meta.appendChild(ratingSpan);
-                info.appendChild(h3);
-                info.appendChild(meta);
-                card.appendChild(img);
-                card.appendChild(info);
-
-                container.appendChild(card);
-            });
-
-            btn.textContent = 'Завантажити ще';
-            btn.disabled = false;
-
-        } catch (error) {
-            console.error('Error:', error);
-            btn.textContent = 'Помилка';
-            setTimeout(() => {
-                btn.textContent = 'Завантажити ще';
-            }, 1000);
-            btn.disabled = false;
-        }
-    };
-</script>
+<script src="/js/search.js"></script>
 <%- include('partials/footer') %>

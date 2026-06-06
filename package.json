@@ -8,7 +8,7 @@
     "dev": "concurrently \"node --watch index.js\" \"npx @tailwindcss/cli -i ./public/css/style.css -o ./public/css/output.css --watch\"",
     "css": "npx @tailwindcss/cli -i ./public/css/style.css -o ./public/css/output.css --watch",
     "build": "npx @tailwindcss/cli -i ./public/css/style.css -o ./public/css/output.css",
-    "start": "node index.js"
+    "start": "npm run build && node index.js"
   },
   "keywords": [],
   "author": "",

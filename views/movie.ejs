@@ -2,7 +2,7 @@
 
     <main>
         <div class="relative min-h-screen">
-            <div class="absolute inset-0 w-full h-full bg-cover bg-center"style="background-image: url(<%= movie.backdrop_path ? 'https://image.tmdb.org/t/p/original' + movie.backdrop_path : '/images/no-poster.svg' %>);">
+            <div class="absolute inset-0 w-full h-full bg-cover bg-center" style="background-image: url('<%= movie.backdrop_path ? 'https://image.tmdb.org/t/p/original' + movie.backdrop_path : '/images/no-poster.svg' %>');">
             </div>
             <div class="absolute inset-0 w-full h-full bg-black/50 bg-gradient-to-t from-gray-900 to-black/50"></div>
             <div class="absolute inset-0 w-full h-full flex flex-col md:flex-row items-start md:items-end p-6 md:p-12 md:pb-20 pt-24 md:pt-0 overflow-y-auto">
@@ -21,7 +21,7 @@
                         <% }) %>
                     </div>
 
-                    <p class="text-gray-400 text-base"><%= movie.release_date.split('-')[0] %> · <%= movie.runtime %> хв · <%= movie.status %></p>
+                    <p class="text-gray-400 text-base"><%= movie.release_date.split('-')[0] %> · <%= movie.runtime ? movie.runtime + ' хв' : 'Невідомо' %> · <%= movie.status %></p>
                     <p class="text-gray-300 text-sm leading-relaxed"><%= movie.overview %></p>
                     
                     <div class="ring-1 ring-white/20 py-2 my-1 w-60 justify-items-center">
